@@ -13,10 +13,13 @@ allprojects {
 	group = 'com.github.x19990416.macrossx.guice.modules'
 	version = '0.1.0'
 
+
 	repositories {
 	   maven{
 	    	url "http://maven.aliyun.com/nexus/content/groups/public/"
+	    	url "https://plugins.gradle.org/m2/"
 	    }
+	    
 	    jcenter()
 	}
 }
@@ -24,5 +27,12 @@ allprojects {
 subprojects {
    apply plugin: 'java'
    apply plugin: 'eclipse'
+
 }
+
+
+dependencies {
+
+}
+
 
