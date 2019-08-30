@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The mx-mod-common Authors
+ * Copyright (C) 2019 The mx-mod-configration Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
@@ -13,21 +13,11 @@
  */
 package com.github.x19990416.macrossx.guice.modules.common;
 
-import java.util.Map;
-import com.google.common.collect.Maps;
-import com.google.inject.AbstractModule;
-import lombok.Getter;
 
-@Getter
-public abstract class BaseModule{
-  private Map<String,AbstractModule> modules = Maps.newHashMap();
-  
-  public abstract String getName();
-  
-  public abstract AbstractModule export(String key);
-
-  public Map<String,AbstractModule> export(){
-    return modules;
-  }
-  
+public class Constants{
+  public static final String MX_JDBC_URL = "mx.jdbc.url";
+  public static final String MX_JDBC_USR = "mx.jdbc.user";
+  public static final String MX_JDBC_PWD = "mx.jdbc.password";
+  public static final String MX_JDBC_DRIVER = "mx.jdbc.driver";
+  public static final String TEST = "mx.jdbc.driver";
 }

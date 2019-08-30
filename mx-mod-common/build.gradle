@@ -8,11 +8,28 @@
 
 // Apply the java-library plugin to add support for Java Library
 apply plugin: 'java'
-apply plugin: 'application'
-
-
+apply plugin: 'maven'
 
 dependencies {	
-   compile group: 'com.google.inject', name: 'guice', version: '4.2.2'   
+   compile group: 'com.google.inject', name: 'guice', version: '4.2.2'
+   // https://mvnrepository.com/artifact/com.google.guava/guava
+	compile group: 'com.google.guava', name: 'guava', version: '28.0-jre'
+	// https://mvnrepository.com/artifact/org.projectlombok/lombok
+	compile group: 'org.projectlombok', name: 'lombok', version: '1.18.8'
+	annotationProcessor 'org.projectlombok:lombok:1.18.8'
+	 
 }
+ 
+uploadArchives {
+    repositories {
+         mavenDeployer {
+          /*  repository(url: '私服仓库地址') {
+                authentication(userName: '账号', password: '密码')
+            }*/
+			repository(url: 'https://oss.sonatype.org/content/repositories/snapshots'){
+			authentication(userName: '', password: '')}
+        }
+    }
+ }
 
+ 
