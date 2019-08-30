@@ -11,17 +11,18 @@
 // In this section you declare where to find the dependencies of your project
 allprojects {
 	group = 'com.github.x19990416.macrossx.guice.modules'
-	version = '0.1.0'
-
+	version = '1.0-SNAPSHOT'
 
 	repositories {
 	   maven{
 	    	url "http://maven.aliyun.com/nexus/content/groups/public/"
 	    	url "https://plugins.gradle.org/m2/"
+	    	url "https://oss.sonatype.org/content/repositories/snapshots"
 	    }
 	    
 	    jcenter()
 	}
+	
 }
 
 subprojects {
