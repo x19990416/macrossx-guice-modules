@@ -9,6 +9,14 @@
 // Apply the java-library plugin to add support for Java Library
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot';
+
+project.configurations.all {  
+	// check for updates every build   
+	resolutionStrategy.cacheChangingModulesFor  0,'seconds'  
+}
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+
 buildscript {
     repositories {
         maven { url 'https://repo.spring.io/libs-milestone' }
@@ -17,24 +25,23 @@ buildscript {
         classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.1.1.RELEASE'
     }
 }
-bootJar {
-	classifier  = 'boot'
-	mainClassName = 'com.github.x19990416.macrossx.guice.modules.configuration.autoconfigure.MxAutoConfiguration'}
 
 // In this section you declare where to find the dependencies of your project
 repositories {
    maven{
     	url "http://maven.aliyun.com/nexus/content/groups/public/"
+    	url "https://oss.sonatype.org/content/repositories/snapshots"
     }
     jcenter()
-}
+} 
 
 dependencies { 
-    compile project(':mx-mod-common')
 	compile group: 'org.apache.commons', name: 'commons-configuration2', version: '2.5'
 	compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
 	// https://mvnrepository.com/artifact/org.yaml/snakeyaml
 	compile group: 'org.yaml', name: 'snakeyaml', version: '1.25'
+	annotationProcessor 'org.projectlombok:lombok:1.18.8' 
+	compile group: 'com.github.x19990416.macrossx.guice.modules', name: 'mx-mod-common', version: '1.0-SNAPSHOT' 
 	
 }
 
