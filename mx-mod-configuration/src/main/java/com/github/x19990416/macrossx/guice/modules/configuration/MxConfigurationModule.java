@@ -1,13 +1,13 @@
 package com.github.x19990416.macrossx.guice.modules.configuration;
 
-import com.github.x19990416.macrossx.guice.modules.common.BaseModule;
+import com.github.x19990416.macrossx.guice.modules.common.MxBaseModule;
 import com.github.x19990416.macrossx.guice.modules.configuration.autoconfigure.MxAutoConfiguration;
 import com.github.x19990416.macrossx.guice.modules.configuration.autoconfigure.MxAutoConfigurationModule;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-public class ConfigurationModule extends BaseModule {
+public class MxConfigurationModule extends MxBaseModule {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
