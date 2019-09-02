@@ -19,6 +19,8 @@ import com.google.inject.AbstractModule;
 
 public class MxDataModule extends MxBaseModule{
 
+  public static String JDBC = "JDBC";
+  
   @Override
   public AbstractModule export(String arg0) {
     switch(arg0) {
