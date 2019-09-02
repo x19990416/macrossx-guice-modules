@@ -29,7 +29,7 @@ repositories {
 dependencies { 
 // https://mvnrepository.com/artifact/mysql/mysql-connector-java
 	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.17'
-	compile group: 'com.github.x19990416.macrossx.guice.modules', name: 'mx-mod-common', version: '1.0-SNAPSHOT'
-	compile group: 'com.github.x19990416.macrossx.guice.modules', name: 'mx-mod-configuration', version: '1.0-SNAPSHOT'  
+	compile group: 'com.github.x19990416.macrossx.guice.modules', name: 'mx-mod-configuration', version: '1.0-SNAPSHOT'
+	
 }
 
