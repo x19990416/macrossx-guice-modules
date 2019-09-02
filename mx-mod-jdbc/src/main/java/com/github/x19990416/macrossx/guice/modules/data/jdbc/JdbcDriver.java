@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.github.x19990416.macrossx.guice.modules.jdbc;
+package com.github.x19990416.macrossx.guice.modules.data.jdbc;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;

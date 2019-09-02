@@ -11,24 +11,10 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.github.x19990416.macrossx.guice.modules.jdbc;
+package com.github.x19990416.macrossx.guice.modules.data.jdbc;
 
 import com.github.x19990416.macrossx.guice.modules.common.BaseModule;
-import com.google.inject.AbstractModule;
 
-public class JdbcModule extends BaseModule {
+public class MxJdbcModule extends MxBaseModule{
 
-  @Override
-  public String getName() {
-    return "JDBCModule";
-  }
-
-  @Override
-  public AbstractModule export(String key) {
-    return new AbstractModule() {      
-      public void configure()  {
-        super.bind(JdbcDriver.class);
-      }
-    }; 
-  }
 }

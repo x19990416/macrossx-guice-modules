@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The mx-mod-common Authors
+ * Copyright (C) 2019 The mx-mod-jdbc Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
@@ -11,23 +11,24 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.github.x19990416.macrossx.guice.modules.common;
+package com.github.x19990416.macrossx.guice.modules.data.jdbc;
 
-import java.util.Map;
-import com.google.common.collect.Maps;
+import com.github.x19990416.macrossx.guice.modules.common.BaseModule;
 import com.google.inject.AbstractModule;
-import lombok.Getter;
 
-@Getter
-public abstract class BaseModule{
-  private Map<String,AbstractModule> modules = Maps.newHashMap();
-  
-  public abstract String getName();
-  
-  public abstract AbstractModule export(String key);
+public class JdbcModule extends BaseModule {
 
-  public Map<String,AbstractModule> export(){
-    return modules;
+  @Override
+  public String getName() {
+    return "JDBCModule";
   }
-  
+
+  @Override
+  public AbstractModule export(String key) {
+    return new AbstractModule() {      
+      public void configure()  {
+        super.bind(JdbcDriver.class);
+      }
+    }; 
+  }
 }
