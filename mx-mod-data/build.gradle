@@ -8,14 +8,9 @@
 
 // Apply the java-library plugin to add support for Java Library
 apply plugin: 'java'
-buildscript {
-    repositories {
-        maven { url 'https://repo.spring.io/libs-milestone' }
-    }
-    dependencies {
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.1.1.RELEASE'
-    }
-}
+apply plugin: 'maven' 
+sourceCompatibility = 1.12
+targetCompatibility = 1.12
 
 // In this section you declare where to find the dependencies of your project
 repositories {
