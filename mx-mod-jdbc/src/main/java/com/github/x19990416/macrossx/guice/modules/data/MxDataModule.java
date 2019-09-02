@@ -23,10 +23,16 @@ public class MxDataModule extends MxBaseModule{
   
   @Override
   public AbstractModule export(String arg0) {
-    switch(arg0) {
-      case "JDBC" :return new JdbcModule();
-      default: return null;
+    if(!super.getModules().containsKey(arg0)) {
+      switch(arg0) {
+        case "JDBC" :{
+          super.getModules().put(JDBC, new JdbcModule());
+          break;
+        }
+        default: return null;
+      }
     }
+    return super.getModules().get(arg0);
   }
 
   @Override
