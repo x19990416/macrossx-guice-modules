@@ -1,6 +1,0 @@
-mx:
-  jdbc:
-    driver: com.mysql.cj.jdbc.Driver
-    usr: root;
-    pwd: root;
-    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC
