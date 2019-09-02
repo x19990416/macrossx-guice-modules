@@ -8,6 +8,8 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 public class MxConfigurationModule extends MxBaseModule {
+     public static final String AUTO_CONFIGURATION= "MxAutoConfiguration";
+  
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
