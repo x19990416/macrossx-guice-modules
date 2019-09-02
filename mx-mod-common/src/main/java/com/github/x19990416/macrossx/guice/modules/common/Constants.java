@@ -16,8 +16,7 @@ package com.github.x19990416.macrossx.guice.modules.common;
 
 public class Constants{
   public static final String MX_JDBC_URL = "mx.jdbc.url";
-  public static final String MX_JDBC_USR = "mx.jdbc.user";
-  public static final String MX_JDBC_PWD = "mx.jdbc.password";
+  public static final String MX_JDBC_USR = "mx.jdbc.usr";
+  public static final String MX_JDBC_PWD = "mx.jdbc.pwd";
   public static final String MX_JDBC_DRIVER = "mx.jdbc.driver";
-  public static final String TEST = "mx.jdbc.driver";
 }
