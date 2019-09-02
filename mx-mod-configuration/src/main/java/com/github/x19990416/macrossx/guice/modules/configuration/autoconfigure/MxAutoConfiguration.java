@@ -50,7 +50,7 @@ public class MxAutoConfiguration implements IMxConfiguration {
 	}
 	
 	private boolean isBootJar() {
-		return this.getClass().getResource("").getPath().startsWith("file:");
+		return ClassLoader.getSystemResource("").getPath().startsWith("file:");
 	}
 
 	private ImmutableConfiguration load(FileBasedConfiguration configuration, String filename)
@@ -58,16 +58,16 @@ public class MxAutoConfiguration implements IMxConfiguration {
 		if (configuration == null)
 			return null;
 		if (isBootJar()) {
-			InputStream inputStream = this.getClass().getResourceAsStream(File.separator+filename);
+			InputStream inputStream = ClassLoader.getSystemResourceAsStream(File.separator+filename);
 			if(inputStream == null) return null;
-			
 			configuration.read(new InputStreamReader(inputStream));
 		} else {
 			URL fileURL = ClassLoader.getSystemResource(filename);
 			if(fileURL == null) {
 				return null;
 			}
-			
+			System.out.println(ClassLoader.getSystemResource(filename).getPath());
+
 			configuration.read(new FileReader(new File(fileURL.getFile())));
 		}
 		return configuration;
@@ -107,7 +107,6 @@ public class MxAutoConfiguration implements IMxConfiguration {
 	}
 
 	public String getString(String key) {
-	
 		for (ImmutableConfiguration im : configs.values()) {
 			if (im.containsKey(key)) {
 				return im.getString(key);
