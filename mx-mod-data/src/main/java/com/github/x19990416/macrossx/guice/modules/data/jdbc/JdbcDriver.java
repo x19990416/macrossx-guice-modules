@@ -44,8 +44,6 @@ public class JdbcDriver {
   @Named(Constants.MX_JDBC_PWD)
   private String jdbcPassword;
 
-  private boolean hasResult = false;
-  
   private Connection conActive; 
 
   public void connect() {
@@ -53,11 +51,9 @@ public class JdbcDriver {
       if (conActive == null) {
         Class.forName(jdbcDriver);
         conActive = DriverManager.getConnection(jdbcUrl);
-        hasResult = false;
       }
       else if(conActive.isClosed()) {
         conActive = DriverManager.getConnection(jdbcUrl);
-        hasResult = false;
       }
     } catch (SQLException | ClassNotFoundException e) {
       // TODO Auto-generated catch block

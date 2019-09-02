@@ -13,11 +13,11 @@
  */
 package com.github.x19990416.macrossx.guice.modules.data;
 
-import com.github.x19990416.macrossx.guice.modules.common.MxBaseModule;
+import com.github.x19990416.macrossx.guice.modules.common.BaseModuleFactory;
 import com.github.x19990416.macrossx.guice.modules.data.jdbc.JdbcModule;
 import com.google.inject.AbstractModule;
 
-public class MxDataModule extends MxBaseModule{
+public class DataModuleFactory extends BaseModuleFactory{
 
   public static String JDBC = "JDBC";
   
