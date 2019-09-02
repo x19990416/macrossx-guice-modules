@@ -13,22 +13,13 @@
  */
 package com.github.x19990416.macrossx.guice.modules.data.jdbc;
 
-import com.github.x19990416.macrossx.guice.modules.common.BaseModule;
 import com.google.inject.AbstractModule;
 
-public class JdbcModule extends BaseModule {
-
-  @Override
-  public String getName() {
-    return "JDBCModule";
+public class JdbcModule extends AbstractModule {
+  
+  public void configure() {
+     bind(JdbcDriver.class);
   }
 
-  @Override
-  public AbstractModule export(String key) {
-    return new AbstractModule() {      
-      public void configure()  {
-        super.bind(JdbcDriver.class);
-      }
-    }; 
-  }
+
 }

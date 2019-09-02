@@ -11,10 +11,26 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.github.x19990416.macrossx.guice.modules.data.jdbc;
+package com.github.x19990416.macrossx.guice.modules.data;
 
-import com.github.x19990416.macrossx.guice.modules.common.BaseModule;
+import com.github.x19990416.macrossx.guice.modules.common.MxBaseModule;
+import com.github.x19990416.macrossx.guice.modules.data.jdbc.JdbcModule;
+import com.google.inject.AbstractModule;
 
-public class MxJdbcModule extends MxBaseModule{
+public class MxDataModule extends MxBaseModule{
+
+  @Override
+  public AbstractModule export(String arg0) {
+    switch(arg0) {
+      case "JDBC" :return new JdbcModule();
+      default: return null;
+    }
+  }
+
+  @Override
+  public String getName() {
+    // TODO Auto-generated method stub
+    return "DATA";
+  }
 
 }
