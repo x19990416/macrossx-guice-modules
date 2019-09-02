@@ -13,35 +13,22 @@
  */
 package com.github.x19990416.macrossx.guice.modules.jdbc;
 
-import java.sql.SQLException;
-import javax.inject.Inject;
 import com.github.x19990416.macrossx.guice.modules.common.BaseModule;
-import com.github.x19990416.macrossx.guice.modules.configuration.ConfigurationModule;
 import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 
 public class JdbcModule extends BaseModule {
 
   @Override
   public String getName() {
-    // TODO Auto-generated method stub
     return "JDBCModule";
   }
 
   @Override
   public AbstractModule export(String key) {
-    // TODO Auto-generated method stub    
     return new AbstractModule() {      
       public void configure()  {
         super.bind(JdbcDriver.class);
       }
     }; 
-  }
-  
-  public static void main(String...s) throws ClassNotFoundException, SQLException {
-    Injector injector = Guice.createInjector(new ConfigurationModule().export("MxAutoConfiguration"),new JdbcModule().export(""));
-    System.out.println(injector.getInstance(JdbcDriver.class).saveOrUpdate("insert into test(id,name) values (?,?)","ccxca","22"));
-    System.out.println(injector.getInstance(JdbcDriver.class).saveOrUpdate("update test set name=? where id =?","21ac","43"));
   }
 }
