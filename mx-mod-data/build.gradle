@@ -28,3 +28,14 @@ dependencies {
 	
 }
 
+uploadArchives {
+    repositories {
+         mavenDeployer {
+          /*  repository(url: '私服仓库地址') {
+                authentication(userName: '账号', password: '密码')
+            }*/
+			repository(url: 'https://oss.sonatype.org/content/repositories/snapshots'){
+			authentication(userName: '', password: '')}
+        }
+    }
+ }
