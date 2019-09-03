@@ -23,6 +23,7 @@ public interface IMxJdbcDriver {
   
   public <T> Page<T> find(String sql,Object[] values,int pageSize,int pageNum,Class<T> clazz) throws SQLException;
   
-  public  int saveOrUpdate(String sql,String ...values) throws SQLException;
+  public  int execute(String sql,String ...values) throws SQLException;
+  
 
 }

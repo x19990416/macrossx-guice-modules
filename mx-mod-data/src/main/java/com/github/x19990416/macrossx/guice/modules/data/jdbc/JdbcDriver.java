@@ -131,7 +131,6 @@ public class JdbcDriver implements IMxJdbcDriver {
     conActive.setAutoCommit(false);
     PreparedStatement stmtActive =  this.conActive.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
     for (int i = 1 ; i<=values.length;i++) {
-      System.out.println("xxxxxxxxxxx\t"+values[i-1]);
       stmtActive.setObject(i, values[i-1]);
     }
     if(maxRows != null && maxRows>0) {
@@ -144,7 +143,7 @@ public class JdbcDriver implements IMxJdbcDriver {
   
 
   @Override
-  public int saveOrUpdate(String sql, String... values) throws SQLException {
+  public int execute(String sql, String... values) throws SQLException {
     PreparedStatement statement = null;
     int ret = -1;
     try {
@@ -180,7 +179,6 @@ public class JdbcDriver implements IMxJdbcDriver {
         e.printStackTrace();
     }
 }
-  
   protected void finalize() {
       this.disconnect();
   }
