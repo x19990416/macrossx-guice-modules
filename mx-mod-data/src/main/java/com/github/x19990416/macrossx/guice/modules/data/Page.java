@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The mx-mod-jdbc Authors
+ * Copyright (C) 2019 The mx-mod-data Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
@@ -11,15 +11,15 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.github.x19990416.macrossx.guice.modules.data.jdbc;
+package com.github.x19990416.macrossx.guice.modules.data;
 
-import com.google.inject.AbstractModule;
+import java.util.List;
+import lombok.Data;
 
-public class JdbcModule extends AbstractModule {
-  
-  public void configure() {
-     bind(IMxJdbcDriver.class).to(JdbcDriver.class);
-  }
-
-
+@Data
+public class Page<T> {
+  private int total;
+  private int pageSize;
+  private int pageNum;
+  private List<T> contents;
 }

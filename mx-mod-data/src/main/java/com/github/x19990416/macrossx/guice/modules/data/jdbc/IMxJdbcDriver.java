@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The mx-mod-jdbc Authors
+ * Copyright (C) 2019 The mx-mod-data Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
@@ -13,13 +13,16 @@
  */
 package com.github.x19990416.macrossx.guice.modules.data.jdbc;
 
-import com.google.inject.AbstractModule;
+import java.sql.SQLException;
+import java.util.List;
+import com.github.x19990416.macrossx.guice.modules.data.Page;
 
-public class JdbcModule extends AbstractModule {
+public interface IMxJdbcDriver {
   
-  public void configure() {
-     bind(IMxJdbcDriver.class).to(JdbcDriver.class);
-  }
-
+  public <T> List<T> find(String sql,Object[] values,Class<T> clazz)  throws SQLException;
+  
+  public <T> Page<T> find(String sql,Object[] values,int pageSize,int pageNum,Class<T> clazz) throws SQLException;
+  
+  public  int saveOrUpdate(String sql,String ...values) throws SQLException;
 
 }

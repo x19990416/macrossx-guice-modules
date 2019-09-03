@@ -40,5 +40,5 @@ public class DataModuleFactory extends BaseModuleFactory{
     // TODO Auto-generated method stub
     return "DATA";
   }
+  }
 
-}

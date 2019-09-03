@@ -26,11 +26,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.apache.commons.beanutils.BeanUtils;
 import com.github.x19990416.macrossx.guice.modules.common.Constants;
+import com.github.x19990416.macrossx.guice.modules.data.Page;
 import com.google.common.collect.Lists;
 import lombok.Data;
 
 @Data
-public class JdbcDriver {
+public class JdbcDriver implements IMxJdbcDriver {
   @Inject
   @Named(Constants.MX_JDBC_URL)
   private String jdbcUrl;
@@ -61,72 +62,113 @@ public class JdbcDriver {
     }
   }
   
-  public <T> List<T> find(String sql,String[] values,Class<T> clazz) throws SQLException {
-    List<T> result = Lists.newArrayList();
-    Object[] results = this.execute(sql, values);
-    List<Object[]> rowDatas = (List<Object[]>)results[1];
-    rowDatas.forEach(data->{
-      try {
+  private <T> List<T> convert(ResultSetMetaData md,ResultSet rs,int fetchRows,Class<T> clazz){
+    List<T> result = Lists.newArrayList();    
+    try {
+      while(rs.next()) {
         T target = clazz.getDeclaredConstructor().newInstance();
-        for(int i=0;i<data.length;i++) {
-         BeanUtils.setProperty(target, (String)((Object[])data[i])[0], ((Object[])data[i])[1]);
+        for(int i =1; i<=md.getColumnCount();i++) {
+          BeanUtils.setProperty(target, md.getColumnLabel(i), rs.getObject(i));
         }
         result.add(target);
-      } catch (IllegalAccessException | InvocationTargetException | InstantiationException | IllegalArgumentException | NoSuchMethodException | SecurityException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
+        if(fetchRows>0) {
+          fetchRows = fetchRows -1;
+          System.out.println("row>>>>\t"+fetchRows);
+          if(fetchRows<=0)break;
+        }
       }
-    });
+    } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+        | InvocationTargetException | NoSuchMethodException | SecurityException | SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
     return result;
   }
   
-  private Object[] execute(String sql, String ...values) throws SQLException {
-    PreparedStatement stmtActive = null;
-    Object[] ret = new Object[2];
+  public <T> List<T> find(String sql,Object[] values,Class<T> clazz) throws SQLException {
+    PreparedStatement statement = null;
+    List<T> result = Lists.newArrayList();
     try {
-    this.connect();
+      this.connect();
+      statement = this.execute(sql, values, null);
+      result = this.convert(statement.getMetaData(),statement.getResultSet(),0,clazz);
+      statement.closeOnCompletion();
+    }finally {
+      if(statement!=null && !statement.isClosed()) {
+        statement.closeOnCompletion();
+      }
+      this.disconnect();
+    }
+    return result;
+  }
+  
+  public <T> Page<T> find(String sql,Object[] values,int pageSize,int pageNum,Class<T> clazz) throws SQLException {
+    PreparedStatement statement = null;
+    Page<T> page = new Page<T>();
+    try {
+      this.connect();
+      statement = this.execute(sql, values, null);
+      ResultSet rs = statement.getResultSet();
+      rs.absolute(pageSize*pageNum);
+      List<T> rows = this.convert(statement.getMetaData(),rs,pageSize,clazz);
+      statement.closeOnCompletion();
+      page.setContents(rows);
+      page.setPageNum(pageNum);
+      page.setPageSize(pageSize);
+      rs.last();
+      page.setTotal(rs.getRow());
+    }finally {
+      if(statement!=null && !statement.isClosed()) {
+        statement.closeOnCompletion();
+      }
+      this.disconnect();
+    }
+    System.out.println(page.getContents().size());
+    return page;
+  }
+  
+  private PreparedStatement execute(String sql, Object[] values,Integer maxRows) throws SQLException {
     conActive.setAutoCommit(false);
-    stmtActive =  this.conActive.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+    PreparedStatement stmtActive =  this.conActive.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
     for (int i = 1 ; i<=values.length;i++) {
-      stmtActive.setString(i, values[i-1]);
+      System.out.println("xxxxxxxxxxx\t"+values[i-1]);
+      stmtActive.setObject(i, values[i-1]);
+    }
+    if(maxRows != null && maxRows>0) {
+      stmtActive.setMaxRows(maxRows);
     }
     stmtActive.execute();
     conActive.commit();
-    ResultSet rs = stmtActive.getGeneratedKeys();
-    if(rs.next()) {
-      ret[0] = rs.getInt(1);
-    } else {
-      ret[0] = stmtActive.getUpdateCount();
-    }
-    //获取数据,key,value,type
-    rs = stmtActive.getResultSet(); 
-    if(rs!=null) {
-    ResultSetMetaData md = rs.getMetaData();
-    List<Object[]> rowDatas = Lists.newArrayList();
-    while (rs.next()) {
-      Object[] columns = new Object[md.getColumnCount()];
-      for (int i = 1; i <= md.getColumnCount(); i++) {
-        Object[] column = new Object[3];//声明Map
-        column[0] = md.getColumnName(i);
-        column[1] = rs.getObject(i);
-        column[2] = md.getColumnClassName(i);
-        columns[i-1] = column; 
-      }
-      rowDatas.add(columns);
-    }
-    ret[1] = rowDatas;
-    }}finally {
-      if(stmtActive!=null &&!stmtActive.isClosed()) {
-        stmtActive.closeOnCompletion();
-      }
-    }
+    return stmtActive;
+  }
+  
+
+  @Override
+  public int saveOrUpdate(String sql, String... values) throws SQLException {
+    PreparedStatement statement = null;
+    int ret = -1;
+    try {
+      this.connect();
+      statement =  this.execute(sql, values, null);
+      ResultSet rs = statement.getGeneratedKeys();
+      if(rs.next()) {
+        ret = rs.getInt(1);
+      } else {
+       ret = statement.getUpdateCount();
+      } 
+    }finally {
+     if(statement!=null && !statement.isClosed()) {
+       statement.closeOnCompletion();
+     }
+     this.disconnect();
+     }
     return ret;
   }
   
-  public  int saveOrUpdate(String sql,String ...values) throws ClassNotFoundException, SQLException {
-    Object[] results = this.execute(sql, values);
-    return (int)results[0];
-  }
+//  public  int saveOrUpdate(String sql,Object ...values) throws SQLException {
+//    Object[] results = this.execute(sql, values,null);
+//    return (int)results[0];
+//  }
    
   public void disconnect() {
     // 关闭数据库连接
@@ -142,4 +184,7 @@ public class JdbcDriver {
   protected void finalize() {
       this.disconnect();
   }
+
+
+
 }
