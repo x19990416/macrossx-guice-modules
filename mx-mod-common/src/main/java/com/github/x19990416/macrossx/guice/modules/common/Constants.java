@@ -19,4 +19,6 @@ public class Constants{
   public static final String MX_JDBC_USR = "mx.jdbc.usr";
   public static final String MX_JDBC_PWD = "mx.jdbc.pwd";
   public static final String MX_JDBC_DRIVER = "mx.jdbc.driver";
+  public static final String MX_SERVER_PORT = "mx.server.port";
+  public static final String MX_SERVER_NAME = "mx.server.name";
 }
