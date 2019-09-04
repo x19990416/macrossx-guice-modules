@@ -16,8 +16,8 @@ package com.github.x19990416.macrossx.guice.modules.starter;
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 
-public class WebApplicationModule extends AbstractModule{
+public class JerseyWebApplicationModule extends AbstractModule{
   public void configure() {
-    bind(Application.class).to(WebApplication.class).in(Scopes.SINGLETON);
+    bind(Application.class).to(JerseyWebApplication.class).in(Scopes.SINGLETON);
   }
 }

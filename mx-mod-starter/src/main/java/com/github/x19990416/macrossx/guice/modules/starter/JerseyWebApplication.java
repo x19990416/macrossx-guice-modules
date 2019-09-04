@@ -12,16 +12,20 @@
  * the License.
  */
 package com.github.x19990416.macrossx.guice.modules.starter;
+import java.util.EnumSet;
+import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.glassfish.jersey.server.ResourceConfig;
 import com.github.x19990416.macrossx.guice.modules.common.Constants;
-import com.google.inject.Injector;
+import com.google.common.collect.Maps;
 import com.google.inject.servlet.GuiceFilter;
-import com.google.inject.servlet.GuiceServletContextListener;
-public class WebApplication extends Application {
-
+public class JerseyWebApplication extends Application {
+  Map<String, ResourceConfig> resourceConfig = Maps.newHashMap();
+  
 
   @Inject
   @Named(Constants.MX_SERVER_PORT)
@@ -39,14 +43,10 @@ public class WebApplication extends Application {
       server = "/"+server;
     else server = "/";
     ServletContextHandler httpContext = new ServletContextHandler(jettyServer, server);
-    httpContext.addEventListener(new GuiceServletContextListener () {
-      @Override
-      protected Injector getInjector() {
-        return injector;
-      }
-    });
-    httpContext.addFilter(GuiceFilter.class, "/*", null);
+    httpContext.addFilter(GuiceFilter.class, "/*", EnumSet.<javax.servlet.DispatcherType>of(javax.servlet.DispatcherType.REQUEST, javax.servlet.DispatcherType.ASYNC));
+    httpContext.addServlet(DefaultServlet.class, "/*");
     jettyServer.setHandler(httpContext);
     jettyServer.start();
+    jettyServer.join();
   }
 }

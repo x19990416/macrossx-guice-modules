@@ -18,23 +18,23 @@ import com.google.inject.AbstractModule;
 
 public class ApplicationModuleFactory extends BaseModuleFactory {
 
-  public static final String WEB_APPLICATION = "WebApplication";
+  public static final String WEB_JERSEY_APPLICATION = "WebJerseyApplication";
   
   @Override
   public AbstractModule export(String key) {
     if(!super.getModules().containsKey(key)) {
       switch(key){
-        case WEB_APPLICATION:{
-          super.getModules().put(WEB_APPLICATION, new WebApplicationModule());
+        case WEB_JERSEY_APPLICATION:{
+          super.getModules().put(WEB_JERSEY_APPLICATION, new JerseyWebApplicationModule());
           break;
         }
       }       
     }
-    return null;
+    return super.getModules().get(key);
   }
 
   @Override
-  public String getName() {
+  public String getName() { 
     // TODO Auto-generated method stub
     return "ApplicationModuleFactory";
   }
