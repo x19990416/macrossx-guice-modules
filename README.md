@@ -9,5 +9,5 @@
 
 ## 使用
 
-  maven server: https://oss.sonatype.org/content/repositories/snapshots
-	compile group: 'com.github.x19990416.macrossx.guice.modules', name: 'xxx', version: '1.0-SNAPSHOT'
+  maven server: https://oss.sonatype.org/content/repositories/snapshots  
+  compile group: 'com.github.x19990416.macrossx.guice.modules', name: 'xxx', version: '1.0-SNAPSHOT'
