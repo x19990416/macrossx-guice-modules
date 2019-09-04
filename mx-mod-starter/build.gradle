@@ -28,6 +28,10 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok:1.18.8' 
 	// https://mvnrepository.com/artifact/com.sun.jersey.contribs/jersey-guice
 	compile group: 'com.sun.jersey.contribs', name: 'jersey-guice', version: '1.19.4'
+	compile group: 'org.glassfish.jersey.core', name: 'jersey-server', version: '2.29'
+	// https://mvnrepository.com/artifact/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider
+	compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version: '2.10.0.pr1'
+	
 	// https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-server
 	compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.20.v20190813'
 	// https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-servlet
@@ -42,7 +46,7 @@ uploadArchives {
                 authentication(userName: '账号', password: '密码')
             }*/
 			repository(url: 'https://oss.sonatype.org/content/repositories/snapshots'){
-			authentication(userName: '', password: '')}
+			authentication(userName: 'x19990416', password: 'Forever')}
         }
     }
  }
